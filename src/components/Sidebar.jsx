@@ -136,7 +136,7 @@ export default function Sidebar({
       }}>
         <div style={{
           fontFamily: "'Lobster', cursive",
-          color: C.primary, fontWeight: 'normal', fontSize: '22px',
+          color: C.primary, fontWeight: 'normal', fontSize: '44px',
           letterSpacing: '0.01em',
         }}>
           The Embosser
