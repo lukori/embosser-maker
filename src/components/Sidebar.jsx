@@ -135,9 +135,9 @@ export default function Sidebar({
         backgroundColor: C.surfaceLowest,
       }}>
         <div style={{
-          fontFamily: "'Space Grotesk', sans-serif",
-          color: C.primary, fontWeight: '900', fontSize: '18px',
-          letterSpacing: '-0.02em', textTransform: 'uppercase',
+          fontFamily: "'Lobster', cursive",
+          color: C.primary, fontWeight: 'normal', fontSize: '22px',
+          letterSpacing: '0.01em',
         }}>
           THE EMBOSSER
         </div>
