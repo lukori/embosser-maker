@@ -175,10 +175,32 @@ export async function buildMaleDie(shapes, params, abortToken) {
 }
 
 /**
+ * Mirrors an array of THREE.Shape objects by negating X coordinates.
+ * Required so the female cavity aligns with the male relief when the
+ * female die is flipped face-down (180° rotation around the Y axis
+ * negates X). Without this, asymmetric logos would collide instead
+ * of fitting together.
+ */
+function mirrorShapesX(shapes) {
+  return shapes.map(shape => {
+    const mirrorPt = p => new THREE.Vector2(-p.x, p.y);
+
+    const newShape = new THREE.Shape();
+    newShape.setFromPoints(shape.getPoints(64).map(mirrorPt));
+    newShape.holes = shape.holes.map(hole => {
+      const newHole = new THREE.Path();
+      newHole.setFromPoints(hole.getPoints(64).map(mirrorPt));
+      return newHole;
+    });
+    return newShape;
+  });
+}
+
+/**
  * Builds the FEMALE die geometry: plate with recessed logo cavity.
  *
- * Uses CSG subtraction with the ORIGINAL shapes (holes preserved).
- * This ensures the female cavity exactly mirrors the male relief:
+ * Uses CSG subtraction with X-mirrored shapes so the cavity aligns
+ * with the male relief when the female die is flipped face-down:
  * - Black (filled) areas → recessed pockets
  * - White (hole) areas within shapes → stay at plate level
  *
@@ -200,10 +222,12 @@ export async function buildFemaleDie(shapes, params, abortToken) {
   if (abortToken.abort || !plateWithMagnets) return null;
   await yield_();
 
-  // Step 2: CSG-subtract each shape from the plate.
-  // Using the ORIGINAL shapes (with shape.holes[] intact) so the
-  // ExtrudeGeometry cutter has the correct filled/hollow areas,
-  // matching exactly what the male die raises.
+  // Step 2: CSG-subtract X-mirrored shapes from the plate.
+  // Mirroring X compensates for the 180° Y-axis rotation applied when
+  // placing the female die face-down onto the male die — the flip
+  // negates X, so starting from -X lands the cavity exactly over the
+  // male relief.
+  const mirroredShapes = mirrorShapesX(shapes);
   const evaluator = new Evaluator();
   evaluator.useGroups = false;
 
@@ -215,7 +239,7 @@ export async function buildFemaleDie(shapes, params, abortToken) {
 
   let result = plateWithMagnets;
 
-  for (const shape of shapes) {
+  for (const shape of mirroredShapes) {
     if (abortToken.abort) break;
 
     const cutterGeo = new THREE.ExtrudeGeometry(shape, {
