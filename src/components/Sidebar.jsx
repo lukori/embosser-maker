@@ -139,7 +139,7 @@ export default function Sidebar({
           color: C.primary, fontWeight: 'normal', fontSize: '22px',
           letterSpacing: '0.01em',
         }}>
-          THE EMBOSSER
+          The Embosser
         </div>
         <div style={{
           fontFamily: 'monospace', color: C.onSurfaceVariant,
