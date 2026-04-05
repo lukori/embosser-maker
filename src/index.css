@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&family=Inter:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #001711;
+  color: #b3efda;
+  font-family: 'Inter', system-ui, sans-serif;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+}
+
+input[type='range'] {
+  accent-color: #d9c92b;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #001711;
+}
+::-webkit-scrollbar-thumb {
+  background: #404945;
+}
+
+.cutting-mat-grid {
+  background-image:
+    radial-gradient(circle, #d9c92b 1px, transparent 1px),
+    linear-gradient(to right, rgba(217,201,43,0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(217,201,43,0.15) 1px, transparent 1px);
+  background-size: 40px 40px, 40px 40px, 40px 40px;
+  background-position: center;
+}
