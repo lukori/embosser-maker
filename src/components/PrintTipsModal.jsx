@@ -12,7 +12,7 @@ const C = {
   outlineVariant: '#404945',
 };
 
-export default function PrintTipsModal({ isOpen, onClose }) {
+export default function PrintTipsModal({ isOpen, onClose, params }) {
   if (!isOpen) return null;
 
   const headingStyle = {
@@ -86,7 +86,7 @@ export default function PrintTipsModal({ isOpen, onClose }) {
           <div>
             <div style={headingStyle}>Magnets</div>
             <ul style={listStyle}>
-              <li style={itemStyle}>— Use <span style={hl}>8×3mm neodymium disc magnets</span> (N35 or stronger)</li>
+              <li style={itemStyle}>— Use <span style={hl}>{params?.magnetDiameter ?? 8}×{params?.magnetDepth ?? 3}mm neodymium disc magnets</span> (N35 or stronger)</li>
               <li style={{ ...itemStyle, color: C.primaryFixed }}>⚠ Test polarity before gluing — must attract face-to-face</li>
               <li style={itemStyle}>— Press-fit or use a drop of super glue</li>
             </ul>

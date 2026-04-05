@@ -409,7 +409,7 @@ export default function Sidebar({
         </button>
       </div>
 
-      <PrintTipsModal isOpen={showModal} onClose={() => setShowModal(false)} />
+      <PrintTipsModal isOpen={showModal} onClose={() => setShowModal(false)} params={params} />
     </aside>
   );
 }
