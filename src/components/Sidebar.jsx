@@ -43,7 +43,7 @@ const PARAMS_CONFIG = [
     num: '03',
     params: [
       { key: 'reliefHeight', label: 'Relief Height', min: 0.5, max: 2.0, step: 0.1,  unit: 'mm', tooltip: 'Height of raised logo on the male die.' },
-      { key: 'paperGap',     label: 'Paper Gap',     min: 0.1, max: 0.6, step: 0.05, unit: 'mm', tooltip: 'Outward offset on female cavity — allows paper to deform without tearing.' },
+      { key: 'paperGap',     label: 'Paper Gap',     min: 0.1, max: 1.5, step: 0.05, unit: 'mm', tooltip: 'Outward offset on female cavity — allows paper to deform without tearing.' },
       { key: 'designScale',  label: 'Design Scale',  min: 40,  max: 95,  step: 1,    unit: '%',  tooltip: 'How much of the plate face the logo occupies.' },
     ],
   },

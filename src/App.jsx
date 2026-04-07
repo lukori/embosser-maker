@@ -10,7 +10,7 @@ const DEFAULT_PARAMS = {
   cornerRadius: 4,
   baseThickness: 4,
   reliefHeight: 1.2,
-  paperGap: 0.3,
+  paperGap: 0.7,
   designScale: 0.8,
   magnetDiameter: 8,
   magnetDepth: 3,
