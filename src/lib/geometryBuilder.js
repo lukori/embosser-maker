@@ -222,24 +222,26 @@ export async function buildFemaleDie(shapes, params, abortToken) {
   if (abortToken.abort || !plateWithMagnets) return null;
   await yield_();
 
-  // Step 2: CSG-subtract X-mirrored shapes from the plate.
-  // Mirroring X compensates for the 180° Y-axis rotation applied when
-  // placing the female die face-down onto the male die — the flip
-  // negates X, so starting from -X lands the cavity exactly over the
-  // male relief.
+  // Step 2: CSG-subtract X-mirrored, outward-offset shapes from the plate.
+  // mirrorShapesX: compensates for the 180° Y-axis flip when placing the
+  //   female die face-down — the flip negates X, so building from -X lands
+  //   the cavity exactly over the male relief.
+  // offsetShapes: expands each cavity by paperGap mm in XY so the paper can
+  //   deform into the gap around the male relief without tearing.
   const mirroredShapes = mirrorShapesX(shapes);
+  const offsetMirroredShapes = offsetShapes(mirroredShapes, paperGap);
   const evaluator = new Evaluator();
   evaluator.useGroups = false;
 
-  // Extra epsilon so the cutter protrudes just above the top face
-  const cavityDepth = reliefHeight + paperGap;
-  const cutterDepth = cavityDepth + 0.1;
+  // Cavity depth matches the male relief exactly; the cutter gets +0.1mm
+  // epsilon so it cleanly breaks through the top face in CSG.
+  const cutterDepth = reliefHeight + 0.1;
   // Position cutter so its top is 0.05 above top face, bottom is inside plate
   const cutterZ = baseThickness - cutterDepth + 0.05;
 
   let result = plateWithMagnets;
 
-  for (const shape of mirroredShapes) {
+  for (const shape of offsetMirroredShapes) {
     if (abortToken.abort) break;
 
     const cutterGeo = new THREE.ExtrudeGeometry(shape, {
