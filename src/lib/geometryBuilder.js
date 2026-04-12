@@ -233,9 +233,11 @@ export async function buildFemaleDie(shapes, params, abortToken) {
   const evaluator = new Evaluator();
   evaluator.useGroups = false;
 
-  // Cavity depth matches the male relief exactly; the cutter gets +0.1mm
-  // epsilon so it cleanly breaks through the top face in CSG.
-  const cutterDepth = reliefHeight + 0.1;
+  // Cavity is reliefHeight + 0.2mm Z clearance for paper thickness, so the
+  // paper isn't crushed when the dies are fully pressed together. The cutter
+  // gets an additional +0.1mm epsilon to cleanly break through the top face.
+  const Z_PAPER_CLEARANCE = 0.2;
+  const cutterDepth = reliefHeight + Z_PAPER_CLEARANCE + 0.1;
   // Position cutter so its top is 0.05 above top face, bottom is inside plate
   const cutterZ = baseThickness - cutterDepth + 0.05;
 
